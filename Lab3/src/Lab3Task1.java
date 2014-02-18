@@ -76,6 +76,15 @@ public class Lab3Task1 extends HttpServlet
 	{
 		// TODO Auto-generated method stub
 		//doGet(request, response);
+		/*String requestString = request.getQueryString();
+		String httpRequest = request.getScheme();
+		String serverName = request.getServerName();
+		int serverPortString = request.getServerPort();*/
+		
+		BufferedReader req = request.getReader();
+		 
+		String line = req.readLine();	
+		
 		int cntEntries=0;
 		String fileEntry = "";
 		response.setContentType("text/html");
@@ -93,14 +102,20 @@ public class Lab3Task1 extends HttpServlet
 	    			  if (paramV.length == 1) {
 	    			  String paramValue = paramV[0];
 	    			  if (paramValue.length() == 0)
-	    			  fileEntry = fileEntry+"null";
+	    			  fileEntry = fileEntry+"null"+" ";
 	    			  else
 	    			  fileEntry = fileEntry+paramValue+" ";
 	    			  }
 	    			  
 	    			  else {
 	    			  for(int i=0; i<paramV.length; i++) 
-	    			  fileEntry = fileEntry+paramV[i]+" ";
+	    			  {
+	    				  
+	    				  if (paramV[i].length() == 0)
+	    	    			  fileEntry = fileEntry+"null"+" ";
+	    	    			  else
+	    	    			  fileEntry = fileEntry+paramV[i]+" ";
+	    			  }
 	    			  }
 	    			 
 	      }
@@ -136,7 +151,7 @@ public class Lab3Task1 extends HttpServlet
 	    		
 	    		
 	    			  
-	   out.println("<html>"+"<body>Transaction successful<br>Number of entries are:"+cntEntries+"Click on hyperlink to go back"+"<a href=\""+request.getRequestURI()+">click here to go back</a>"+"</body>"+"</html>");
+	   out.println("<html>"+"<body>Transaction successful<br>Number of entries are:"+cntEntries+"<br><a href=\"http://localhost:8080/Lab3/Form1.html\">click here to go back</a>"+line+"</body></html>");
 	      
 		 /* String title = "Using GET Method to Read Form Data Changed";
 	      String docType =
