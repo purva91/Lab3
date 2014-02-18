@@ -41,12 +41,12 @@ public class Lab3Task1 extends HttpServlet
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		out.println("Hello World");
-		*/
+		
 		
 		 response.setContentType("text/html");
 
 	      PrintWriter out = response.getWriter();
-		  String title = "Using GET Method to Read Form Data";
+		  String title = "Using GET Method to Read Form Data Changed";
 	      String docType =
 	      "<!doctype html public \"-//w3c//dtd html 4.0 " +
 	      "transitional//en\">\n";
@@ -57,11 +57,12 @@ public class Lab3Task1 extends HttpServlet
 	                "<h1 align=\"center\">" + title + "</h1>\n" +
 	                "<ul>\n" +
 	                "  <li><b>First Name</b>: "
-	                + request.getParameter("first_name") + "\n" +
+	                + request.getParameter("firstname") + "\n" +
 	                "  <li><b>Last Name</b>: "
-	                + request.getParameter("last_name") + "\n" +
+	                + request.getParameter("lastname") + "\n" +
 	                "</ul>\n" +
 	                "</body></html>");
+	       */
 	}
 	
 	/**
@@ -73,6 +74,29 @@ public class Lab3Task1 extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
+		
+		response.setContentType("text/html");
+
+	      PrintWriter out = response.getWriter();
+		  String title = "Using GET Method to Read Form Data Changed";
+	      String docType =
+	      "<!doctype html public \"-//w3c//dtd html 4.0 " +
+	      "transitional//en\">\n";
+	      out.println(docType +
+	                "<html>\n" +
+	                "<head><title>" + title + "</title></head>\n" +
+	                "<body bgcolor=\"#f0f0f0\">\n" +
+	                "<h1 align=\"center\">" + title + "</h1>\n" +
+	                "<ul>\n" +
+	                "  <li><b>First Name</b>: "
+	                + request.getParameter("firstname") + "\n" +
+	                "  <li><b>Last Name</b>: "
+	                + request.getParameter("lastname") + "\n" +
+	                "</ul>\n" +
+	                "</body></html>");
+
+		
+		
 	}
 }
