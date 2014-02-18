@@ -1,5 +1,6 @@
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -75,11 +76,69 @@ public class Lab3Task1 extends HttpServlet
 	{
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		
+		int cntEntries=0;
+		String fileEntry = "";
 		response.setContentType("text/html");
-
+		PrintWriter writeToFile;
 	      PrintWriter out = response.getWriter();
-		  String title = "Using GET Method to Read Form Data Changed";
+	      
+	     Enumeration<String> params = request.getParameterNames();
+	      
+	     
+	      while(params.hasMoreElements())
+	      {
+	    	  String paramN = (String)params.nextElement();
+	    	  String[] paramV =
+	    			  request.getParameterValues(paramN);
+	    			  if (paramV.length == 1) {
+	    			  String paramValue = paramV[0];
+	    			  if (paramValue.length() == 0)
+	    			  fileEntry = fileEntry+"null";
+	    			  else
+	    			  fileEntry = fileEntry+paramValue+" ";
+	    			  }
+	    			  
+	    			  else {
+	    			  for(int i=0; i<paramV.length; i++) 
+	    			  fileEntry = fileEntry+paramV[i]+" ";
+	    			  }
+	    			 
+	      }
+	      
+	      File file  = new File("/Users/Cynosure/Downloads/ResultEntries.txt");
+	      if(!file.exists())
+	      {
+	    	  file.createNewFile();
+	    	 writeToFile = new PrintWriter(file); 
+	    	 writeToFile.write(fileEntry);
+	    	 writeToFile.append("\n");
+	      }
+	      
+	      else {
+	    	   writeToFile = new PrintWriter(new FileWriter(file,true)); 
+	      writeToFile.append(fileEntry);
+	      writeToFile.append("\n");
+	      }
+	      
+	      writeToFile.close();
+		fileEntry="";
+	    			  
+	    	BufferedReader read = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+	      
+	    	fileEntry=read.readLine();
+	    		while(fileEntry!=null)
+	    		{
+	    			++cntEntries;
+	    			fileEntry=read.readLine();
+	    		}
+	    		
+	    		read.close();
+	    		
+	    		
+	    			  
+	   out.println("<html>"+"<body>Transaction successful<br>Number of entries are:"+cntEntries+"Click on hyperlink to go back"+"<a href=\""+request.getRequestURI()+">click here to go back</a>"+"</body>"+"</html>");
+	      
+		 /* String title = "Using GET Method to Read Form Data Changed";
 	      String docType =
 	      "<!doctype html public \"-//w3c//dtd html 4.0 " +
 	      "transitional//en\">\n";
@@ -94,7 +153,7 @@ public class Lab3Task1 extends HttpServlet
 	                "  <li><b>Last Name</b>: "
 	                + request.getParameter("lastname") + "\n" +
 	                "</ul>\n" +
-	                "</body></html>");
+	                "</body></html>");*/
 
 		
 		
