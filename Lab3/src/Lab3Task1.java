@@ -76,14 +76,8 @@ public class Lab3Task1 extends HttpServlet
 	{
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		/*String requestString = request.getQueryString();
-		String httpRequest = request.getScheme();
-		String serverName = request.getServerName();
-		int serverPortString = request.getServerPort();*/
-		
-		BufferedReader req = request.getReader();
-		 
-		String line = req.readLine();	
+		String requestString =request.getRemoteHost();
+	
 		
 		int cntEntries=0;
 		String fileEntry = "";
@@ -151,7 +145,7 @@ public class Lab3Task1 extends HttpServlet
 	    		
 	    		
 	    			  
-	   out.println("<html>"+"<body>Transaction successful<br>Number of entries are:"+cntEntries+"<br><a href=\"http://localhost:8080/Lab3/Form1.html\">click here to go back</a>"+line+"</body></html>");
+	   out.println("<html>"+"<body>Transaction successful<br>Number of entries are:"+cntEntries+"<br><a href=\"../Lab3/Form1.html\">click here to go back</a></body></html>");
 	      
 		 /* String title = "Using GET Method to Read Form Data Changed";
 	      String docType =
