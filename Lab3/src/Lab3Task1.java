@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Lab3Task1 extends HttpServlet 
 {
+	
+	 File file  = new File("/Users/Cynosure/Downloads/ResultEntries.txt");
 	private static final long serialVersionUID = 1L;
     /**
 
@@ -38,32 +40,45 @@ public class Lab3Task1 extends HttpServlet
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		/*
-		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
-		out.println("Hello World");
-		
-		
-		 response.setContentType("text/html");
-
-	      PrintWriter out = response.getWriter();
-		  String title = "Using GET Method to Read Form Data Changed";
-	      String docType =
-	      "<!doctype html public \"-//w3c//dtd html 4.0 " +
-	      "transitional//en\">\n";
-	      out.println(docType +
-	                "<html>\n" +
-	                "<head><title>" + title + "</title></head>\n" +
-	                "<body bgcolor=\"#f0f0f0\">\n" +
-	                "<h1 align=\"center\">" + title + "</h1>\n" +
-	                "<ul>\n" +
-	                "  <li><b>First Name</b>: "
-	                + request.getParameter("firstname") + "\n" +
-	                "  <li><b>Last Name</b>: "
-	                + request.getParameter("lastname") + "\n" +
-	                "</ul>\n" +
-	                "</body></html>");
-	       */
+		//Map<String,String[]> queryParams = request.getParameterMap();
+		response.setContentType("text/html");
+	    PrintWriter out = response.getWriter();
+		Enumeration<String> params = request.getParameterNames();
+		BufferedReader read = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+	      
+    	String fileEntry=read.readLine();
+    		while(fileEntry!=null)
+    		{
+    			HashMap<String,String> fileMap = new HashMap<String,String>();
+    			String[] fileValues = fileEntry.split(",");
+    			/*TODO split the file entry and store in the fileHashMap in corresponding values*/
+    			fileMap.put("firstname", fileValues[0]);
+    			fileMap.put("lastname", fileValues[1]);
+    			fileMap.put("dob ",fileValues[2]);
+    			fileMap.put("languages", fileValues[3]);
+    			fileMap.put("days", fileValues[4]);
+    			
+    			/*TODO: pass the keys of query parameter map to file HashMap to check if the value
+    			 *  of fileHashMap contains the same value or substring of value .
+    			 * */
+    			
+    			
+    			while(params.hasMoreElements())
+    			{
+    				/*Get the value of each parameter, pass the parameter as the key in fileHasMap */
+    				String paramN = (String)params.nextElement();
+    		    	  String[] paramV =
+    		    			  request.getParameterValues(paramN);
+    		    			  String paramValue = paramV[0];
+    		    	String checkValue = fileMap.get(paramN);
+    		    	if(checkValue.contains(paramValue)){
+    		    		out.println("<html>"+checkValue+"</html>");break;}
+    			}
+    			break;
+    			//fileEntry=read.readLine();
+    		}
+    		
+    		read.close();
 	}
 	
 	/**
@@ -76,9 +91,6 @@ public class Lab3Task1 extends HttpServlet
 	{
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		String requestString =request.getRemoteHost();
-	
-		
 		int cntEntries=0;
 		String fileEntry = "";
 		response.setContentType("text/html");
@@ -96,9 +108,9 @@ public class Lab3Task1 extends HttpServlet
 	    			  if (paramV.length == 1) {
 	    			  String paramValue = paramV[0];
 	    			  if (paramValue.length() == 0)
-	    			  fileEntry = fileEntry+"no value"+" ";
+	    			  fileEntry = fileEntry+"no value"+",";
 	    			  else
-	    			  fileEntry = fileEntry+paramValue+" ";
+	    			  fileEntry = fileEntry+paramValue+",";
 	    			  }
 	    			  
 	    			  else {
@@ -114,7 +126,6 @@ public class Lab3Task1 extends HttpServlet
 	    			 
 	      }
 	      
-	      File file  = new File("/Users/Cynosure/Downloads/ResultEntries.txt");
 	      if(!file.exists())
 	      {
 	    	  file.createNewFile();
