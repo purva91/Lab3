@@ -101,11 +101,18 @@ public class Lab3Task1 extends HttpServlet {
 		}
 
 		read.close();
-		if (result.isEmpty()) {
+		
+		String user = request.getHeader("User-Agent");
+		String accept = request.getHeader("Accept");
+		
+		
+		if (!result.isEmpty()) {
 			for (int i = 0; i < result.size(); i++) {
-				out.println("<html>\"" + result.get(i) + "</html>");
+				out.println("<html><body background-color:\"pink\"><font size=12>>\"" +result.get(i)+"\"<font></body></html>");
 			}
+			
 		}
+		
 	}
 
 	/**
