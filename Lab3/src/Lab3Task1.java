@@ -42,6 +42,9 @@ public class Lab3Task1 extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		Enumeration<String> params = request.getParameterNames();
+		Map<String,String[]> param = request.getParameterMap();
+		Set<String> keys = param.keySet();
+		
 		BufferedReader read = new BufferedReader(new FileReader(
 				file.getAbsoluteFile()));
 
@@ -66,13 +69,12 @@ public class Lab3Task1 extends HttpServlet {
 			 * substring of value .
 			 */
 
-			while (params.hasMoreElements()) {
+			for(String paramN:keys){
 				/*
 				 * Get the value of each parameter, pass the parameter as the
 				 * key in fileHasMap
 				 */
-				String paramN = (String) params.nextElement();
-				String[] paramV = request.getParameterValues(paramN);
+				String[] paramV = param.get(paramN);
 				if (paramV.length == 1) {
 					String paramValue = paramV[0];
 					String checkValue = fileMap.get(paramN);
@@ -92,25 +94,27 @@ public class Lab3Task1 extends HttpServlet {
 							set = true;
 					}
 				}
-
-			}
+							}
 			if (set==true)
 				result.add(saveEntry);
 			fileEntry = read.readLine();
 			saveEntry = fileEntry;
+			set=false;
 		}
 
 		read.close();
-		
-		String user = request.getHeader("User-Agent");
-		String accept = request.getHeader("Accept");
-		
-		
+
 		if (!result.isEmpty()) {
+			
 			for (int i = 0; i < result.size(); i++) {
 				out.println("<html><body background-color:\"pink\"><font size=12>>\"" +result.get(i)+"\"<font></body></html>");
 			}
 			
+		}
+		
+		else{
+			
+			out.println("<html>No Results</html>");
 		}
 		
 	}
