@@ -96,7 +96,7 @@ public class Lab3Task1 extends HttpServlet
 	    			  if (paramV.length == 1) {
 	    			  String paramValue = paramV[0];
 	    			  if (paramValue.length() == 0)
-	    			  fileEntry = fileEntry+"null"+" ";
+	    			  fileEntry = fileEntry+"no value"+" ";
 	    			  else
 	    			  fileEntry = fileEntry+paramValue+" ";
 	    			  }
@@ -106,7 +106,7 @@ public class Lab3Task1 extends HttpServlet
 	    			  {
 	    				  
 	    				  if (paramV[i].length() == 0)
-	    	    			  fileEntry = fileEntry+"null"+" ";
+	    	    			  fileEntry = fileEntry+"no value"+" ";
 	    	    			  else
 	    	    			  fileEntry = fileEntry+paramV[i]+" ";
 	    			  }
@@ -145,7 +145,7 @@ public class Lab3Task1 extends HttpServlet
 	    		
 	    		
 	    			  
-	   out.println("<html>"+"<body>Transaction successful<br>Number of entries are:"+cntEntries+"<br><a href=\"../Lab3/Form1.html\">click here to go back</a></body></html>");
+	   out.println("<html>"+"<body>Transaction successful<br>Number of entries are:"+cntEntries+"<br><a href=\".."+request.getContextPath()+"/Form1.html\">click here to go back</a></body></html>");
 	      
 		 /* String title = "Using GET Method to Read Form Data Changed";
 	      String docType =
