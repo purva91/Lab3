@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Lab3Task1")
 public class Lab3Task1 extends HttpServlet {
 
-	File file = new File("/Users/Cynosure/Downloads/ResultEntries.txt");
+	File file = new File("/ResultEntries.txt");
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -41,7 +41,6 @@ public class Lab3Task1 extends HttpServlet {
 		ArrayList<String> result = new ArrayList<String>();
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		Enumeration<String> params = request.getParameterNames();
 		Map<String,String[]> param = request.getParameterMap();
 		Set<String> keys = param.keySet();
 		
@@ -103,18 +102,38 @@ public class Lab3Task1 extends HttpServlet {
 		}
 
 		read.close();
-
-		if (!result.isEmpty()) {
-			
-			for (int i = 0; i < result.size(); i++) {
-				out.println("<html><body background-color:\"pink\"><font size=12>>\"" +result.get(i)+"\"<font></body></html>");
+		
+		String user = request.getHeader("User-Agent");
+		
+		if (!result.isEmpty()) 
+		{
+			for (int i = 0; i < result.size(); i++) 
+			{
+				if(user.indexOf("Mobile") != -1) 
+				{
+					out.println("<html><body bgcolor=\"pink\"><font size=8>\"" +result.get(i)+"\"<font></body></html>");
+				    //you're in mobile land
+				} 
+				else 
+				{
+					  out.println("<html><body bgcolor=\"pink\"><font size=12>\"" +result.get(i)+"\"<font></body></html>");
+				}
+				
 			}
-			
+
 		}
 		
 		else{
 			
-			out.println("<html>No Results</html>");
+			if(user.indexOf("Mobile") != -1) 
+			{
+				out.println("<html><body bgcolor=\"pink\"><font size=8>No Results<font></body></html>");
+			    //you're in mobile land
+			} 
+			else 
+			{
+				  out.println("<html><body bgcolor=\"pink\"><font size=12>No Results<font></body></html>");
+			}
 		}
 		
 	}
