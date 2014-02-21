@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Lab3Task1")
 public class Lab3Task1 extends HttpServlet {
 
-	File file = new File("/ResultEntries.txt");
+	static File file ;
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -41,12 +42,22 @@ public class Lab3Task1 extends HttpServlet {
 		ArrayList<String> result = new ArrayList<String>();
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		Map<String,String[]> param = request.getParameterMap();
+		Hashtable<String,String[]> param = new Hashtable<String,String[]>(); 
+		
 		Set<String> keys = param.keySet();
 		
 		BufferedReader read = new BufferedReader(new FileReader(
 				file.getAbsoluteFile()));
-
+		
+	String query = request.getQueryString();
+	
+	String[] paramArray = query.split("&");
+for (int i=0;i<paramArray.length;i++){
+	String[] indivParams = paramArray[i].split("=");
+	String[] values = indivParams[1].split("\\+");
+	param.put(indivParams[0], values);	
+}
+	
 		String fileEntry = read.readLine();
 		String saveEntry = fileEntry;
 		while (fileEntry != null) {
@@ -152,6 +163,13 @@ public class Lab3Task1 extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// doGet(request, response);
+		
+		String fileName = "/WEB-INF/ResultEntries.txt";
+		ServletContext context = request.getServletContext();
+		String path = context.getRealPath(fileName);
+		
+		file = new File(path);
+		
 		int cntEntries = 0;
 		String fileEntry = "";
 		response.setContentType("text/html");
